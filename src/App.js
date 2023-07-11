@@ -1,37 +1,32 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import { Link, Route, Routes } from 'react-router-dom';
 
 function App() {
-  const n = 8, m = 8;
-
-  const [chessBoard, setChessBoard] = useState([])
-
-  useEffect(() => {
-    const result = []
-
-    for (let i = 0; i < n; i++) {
-      const row = Array.from({ length: m });
-
-      result.push(row);
-    }
-    setChessBoard(result);
-  }, []);
-
   return (
-    <div className="App">
-      {
-        chessBoard.length > 0 &&
-        chessBoard.map((row, rIndex) => {
-          return (
-            <div key={rIndex} className="row">
-              {row.map((_, cIndex) => {
-                return (
-                  <div key={cIndex} className={`box ${(rIndex + cIndex) % 2 === 0 ? "black" : "white"}`}></div>)
-              })}
-            </div>
-          )
-        })}
-    </div>);
+    <div>
+      <nav className="navbar navbar-expand navbar-dark bg-dark">
+        <a href='/tutorials' className='navbar-brand'>Tutorials</a>
+        <div className='navbar-nav mr-auto'>
+          <li className='nav-item'>
+            <Link to={`/tutorials`} className='nav-link'>Tutorials</Link>
+          </li>
+          <li className='nav-item'>
+            <Link to={`/add`} className='nav-link'>Add</Link>
+          </li>
+        </div>
+      </nav>
+      <div className='container mt-3'>
+        <Routes>
+          <Route path='/' element={<TutorialsList/>} />
+          <Route path='/tutorials' element={<TutorialsList/>} />
+          <Route path='/add' element={<AddTutorial/>} />
+          <Route path='/tutorials/:id' element={<Tutorial/>} />
+        </Routes>
+      </div>
+    </div>
+  )
 }
 
 export default App;
